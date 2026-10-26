@@ -19,8 +19,9 @@
   #stage {
     position: fixed; inset: 0; opacity: 0; transform: scale(.96);
     transition: opacity 1.2s ease, transform 1.2s ease;
+    pointer-events: none;
   }
-  #stage.show { opacity: 1; transform: scale(1); }
+  #stage.show { opacity: 1; transform: scale(1); pointer-events: auto; }
   #stage iframe { width: 100%; height: 100%; border: 0; }
 </style>
 </head>
@@ -33,7 +34,7 @@
   document.getElementById('play').addEventListener('click', function () {
     this.classList.add('gone');
     const stage = document.getElementById('stage');
-    stage.innerHTML = '<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+    stage.innerHTML = '<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
     setTimeout(() => stage.classList.add('show'), 400);
   });
 </script>
