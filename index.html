@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>▶</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: grid; place-items: center; }
+  #play {
+    width: 120px; height: 120px; border-radius: 50%;
+    border: 3px solid #fff; background: transparent; cursor: pointer;
+    display: grid; place-items: center;
+    transition: transform .3s ease, opacity .6s ease, background .3s ease;
+  }
+  #play:hover { transform: scale(1.08); background: rgba(255,255,255,.08); }
+  #play svg { width: 48px; height: 48px; margin-left: 8px; fill: #fff; }
+  #play.gone { opacity: 0; transform: scale(.6); pointer-events: none; }
+  #stage {
+    position: fixed; inset: 0; opacity: 0; transform: scale(.96);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+  }
+  #stage.show { opacity: 1; transform: scale(1); }
+  #stage iframe { width: 100%; height: 100%; border: 0; }
+</style>
+</head>
+<body>
+<button id="play" aria-label="Play">
+  <svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg>
+</button>
+<div id="stage"></div>
+<script>
+  document.getElementById('play').addEventListener('click', function () {
+    this.classList.add('gone');
+    const stage = document.getElementById('stage');
+    stage.innerHTML = '<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=0&rel=0&modestbranding=1&playsinline=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>';
+    setTimeout(() => stage.classList.add('show'), 400);
+  });
+</script>
+</body>
+</html>
