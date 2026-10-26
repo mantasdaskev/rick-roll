@@ -40,16 +40,19 @@
     this.classList.add('gone');
     const stage = document.getElementById('stage');
     if (!window.YT || !YT.Player) return setTimeout(fallback, 400);
+    setTimeout(() => stage.classList.add('show'), 400);
+    // If the video isn't actually playing within 5s, go to YouTube directly.
+    const watchdog = setTimeout(fallback, 5000);
     new YT.Player('player', {
       videoId: VIDEO,
       host: 'https://www.youtube.com',
       playerVars: { autoplay: 1, controls: 0, rel: 0, playsinline: 1, origin: location.origin },
       events: {
-        onReady: e => { e.target.playVideo(); stage.classList.add('show'); },
+        onReady: e => e.target.playVideo(),
+        onStateChange: e => { if (e.data === YT.PlayerState.PLAYING) clearTimeout(watchdog); },
         onError: fallback
       }
     });
-    document.querySelector('#stage iframe')?.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
   });
 </script>
 </body>
